@@ -1,0 +1,110 @@
+[
+  {
+    "name": "KitKat Original Milk Chocolate",
+    "established": 1935,
+    "taste": "Sweet, creamy, and milky",
+    "pic": "https://i.imgur.com/kitkat-original-milk-chocolate.jpg",
+    "brand": "KitKat",
+    "rating": 4.5,
+    "price": 1.50
+  },
+  {
+    "name": "KitKat White Chocolate",
+    "established": 2001,
+    "taste": "Sweet, creamy, and milky with a hint of vanilla",
+    "pic": "https://i.imgur.com/kitkat-white-chocolate.jpg",
+    "brand": "KitKat",
+    "rating": 4.2,
+    "price": 1.60
+  },
+  {
+    "name": "KitKat Dark Chocolate",
+    "established": 2004,
+    "taste": "Rich, dark chocolate with a hint of bitterness",
+    "pic": "https://i.imgur.com/kitkat-dark-chocolate.jpg",
+    "brand": "KitKat",
+    "rating": 4.3,
+    "price": 1.70
+  },
+  {
+    "name": "KitKat Green Tea",
+    "established": 2007,
+    "taste": "Sweet, creamy, and milky with a hint of green tea",
+    "pic": "https://i.imgur.com/kitkat-green-tea.jpg",
+    "brand": "KitKat",
+    "rating": 4.4,
+    "price": 1.80
+  },
+  {
+    "name": "Catevery Hazelnut Crunch",
+    "established": 2015,
+    "taste": "Sweet, creamy milk chocolate with crunchy hazelnut pieces",
+    "pic": "https://i.imgur.com/catevery-hazelnut-crunch.jpg",
+    "brand": "Catevery",
+    "rating": 4.5,
+    "price": 1.90
+  },
+  {
+    "name": "Catevery Dark Chocolate with Sea Salt",
+    "established": 2016,
+    "taste": "Rich, dark chocolate with a hint of sea salt",
+    "pic": "https://i.imgur.com/catevery-dark-chocolate-sea-salt.jpg",
+    "brand": "Catevery",
+    "rating": 4.6,
+    "price": 2.00
+  },
+  {
+    "name": "Catevery Ruby Chocolate",
+    "established": 2017,
+    "taste": "Sweet, fruity, and slightly tart",
+    "pic": "https://i.imgur.com/catevery-ruby-chocolate.jpg",
+    "brand": "Catevery",
+    "rating": 4.7,
+    "price": 2.10
+  },
+  {
+    "name": "Catevery Matcha White Chocolate",
+    "established": 2018,
+    "taste": "Sweet, creamy white chocolate with a hint of matcha",
+    "pic": "https://i.imgur.com/catevery-matcha-white-chocolate.jpg",
+    "brand": "Catevery",
+    "rating": 4.8,
+    "price": 2.20
+  },
+   {
+    "name": "Nocilla Original",
+    "established": 1940,
+    "taste": "Rich, hazelnut chocolate spread",
+    "pic": "https://i.imgur.com/nocilla-original.jpg",
+    "brand": "Nocilla",
+    "rating": 4.9,
+    "price": 3.00
+  },
+  {
+    "name": "Nocilla Blanca",
+    "established": 2000,
+    "taste": "Sweet, creamy white chocolate spread",
+    "pic": "https://i.imgur.com/nocilla-blanca.jpg",
+    "brand": "Nocilla",
+    "rating": 4.8,
+    "price": 3.10
+  },
+  {
+    "name": "Nocilla Duo",
+    "established": 2007,
+    "taste": "Two-layered spread with Nocilla Original on one side and Nocilla Blanca on the other",
+    "pic": "https://i.imgur.com/nocilla-duo.jpg",
+    "brand": "Nocilla",
+    "rating": 5.0,
+    "price": 3.20
+  },
+  {
+    "name": "Nocilla Zero",
+    "established": 2016,
+    "taste": "Sugar-free and fat-free Nocilla spread",
+    "pic": "https://i.imgur.com/nocilla-zero.jpg",
+    "brand": "Nocilla",
+    "rating": 4.7,
+    "price": 3.30
+  }
+]
