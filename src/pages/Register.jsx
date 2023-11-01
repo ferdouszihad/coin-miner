@@ -1,8 +1,19 @@
 import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 import animation from "../assets/lotties/Animation - 1698080630949.json";
+import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
 import { useState } from "react";
+
 const Register = () => {
+  const { user, createUser, setUser, updateUser } = useAuth();
+  console.log(user);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const avatar = [
     "https://img.icons8.com/?size=96&id=81120&format=png",
     "https://img.icons8.com/?size=96&id=80989&format=png",
@@ -11,13 +22,35 @@ const Register = () => {
     "https://img.icons8.com/?size=96&id=81802&format=png",
   ];
   const [activeAvatar, setActiveAvater] = useState(avatar[0]);
-  console.log(activeAvatar);
+  // console.log(activeAvatar);
+  //::todo:: Photo Upload system
+  // // const [isNeedCustom, setIsNeedCustom] = useState(false);
 
-  const [isNeedCustom, setIsNeedCustom] = useState(false);
+  // const customUrlHandler = () => {
+  //   setActiveAvater("");
+  //   // setIsNeedCustom(true);
+  // };
+  const onSubmit = (data) => {
+    console.log(data);
+    createUser(data?.email, data?.pass)
+      .then((res) => {
+        updateUser({ photoURL: activeAvatar, displayName: data.name }).then(
+          () => {
+            alert("login success");
+            setUser({
+              ...res.user,
+              photoURL: activeAvatar,
+              displayName: data.name,
+            });
+          }
+        );
 
-  const customUrlHandler = () => {
-    setActiveAvater("");
-    setIsNeedCustom(true);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.code);
+      });
   };
 
   return (
@@ -40,18 +73,26 @@ const Register = () => {
             </p>
           </div>
 
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
               </label>
               <input
-                type="name"
-                name="name"
+                type="text"
                 placeholder="Enter your Name"
                 className="input input-bordered"
-                required
+                {...register("name", {
+                  required: true,
+                  pattern: /^[A-Za-z\s]{1,30}$/,
+                })}
               />
+
+              {errors.name && (
+                <span className="text-sm text-red-600 p-2">
+                  Dont use Numbers in name
+                </span>
+              )}
             </div>
             <div className="flex gap-5 flex-wrap">
               <div className="form-control">
@@ -60,10 +101,9 @@ const Register = () => {
                 </label>
                 <input
                   type="email"
-                  name="name"
                   placeholder="Enter Email"
                   className="input input-bordered"
-                  required
+                  {...register("email", { required: true })}
                 />
               </div>
 
@@ -72,12 +112,19 @@ const Register = () => {
                   <span className="label-text">Contact Number Here</span>
                 </label>
                 <input
-                  type="email"
-                  name="name"
+                  type="text"
                   placeholder="Enter Phone Number"
                   className="input input-bordered"
-                  required
+                  {...register("phone", {
+                    required: true,
+                    // pattern: /^\d{11}$/,
+                  })}
                 />
+                {errors.phone && (
+                  <span className="text-sm text-red-600 p-2">
+                    Insert a valid 11 digit number
+                  </span>
+                )}
               </div>
             </div>
 
@@ -103,7 +150,6 @@ const Register = () => {
                 ))}
                 <div className="rounded-full cursor-pointer  bg-base-200 flex items-center justify-center w-16 h-16">
                   <img
-                    onClick={customUrlHandler}
                     src="https://img.icons8.com/?size=96&id=8ax09IWlr80n&format=png"
                     alt=""
                     className="max-w-[40px] "
@@ -113,31 +159,70 @@ const Register = () => {
             </div>
             <div className="form-control">
               <label className="label">
+                <span className="label-text">NID Number</span>
+              </label>
+              <input
+                type="number"
+                placeholder="password"
+                className="input input-bordered"
+                {...register("nid", {
+                  required: true,
+                  //  pattern: /^\d{10}$/ ,
+                })}
+              />{" "}
+              {errors.nid && (
+                <span className="text-sm text-red-600 p-2">
+                  Insert a Valid NID
+                </span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <div className="flex flex-wrap gap-5">
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  required
-                />{" "}
-                <input
-                  type="password"
-                  placeholder="Confirm password"
-                  className="input input-bordered"
-                  required
-                />
+                <div className="flex-1">
+                  <input
+                    type="password"
+                    placeholder="password"
+                    className="input input-bordered "
+                    {...register("pass", {
+                      required: true,
+                      pattern: /^(?=.*\d)(?=.*[A-Z]).{6,}$/,
+                    })}
+                  />
+                  {errors.pass && (
+                    <span className="text-sm block text-red-600 p-2">
+                      One [A-Z] [0-9], minimum 6 character
+                    </span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="password"
+                    placeholder="Confirm password"
+                    className="input input-bordered"
+                    {...register("passConfirm", { required: true })}
+                  />
+                </div>
               </div>
 
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
+                {watch("pass") !== watch("passConfirm") ? (
+                  <span className="text-sm block text-red-600 p-2">
+                    Password Does Not Matched
+                  </span>
+                ) : (
+                  <span className="text-sm block text-green-600 p-2">
+                    ✅ Password Matched
+                  </span>
+                )}
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button type="submit" className="btn btn-primary">
+                Register Now
+              </button>
             </div>
           </form>
         </div>

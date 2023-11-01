@@ -1,22 +1,33 @@
 import { NavLink } from "react-router-dom";
 import { HiBars3BottomRight, HiBarsArrowUp } from "react-icons/hi2";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
   const [isMenu, setIsMenu] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const { user, logOut } = useAuth();
 
   const menuLG = (
     <ul className="flex gap-5">
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
-      <li>
-        <NavLink to="/register">Register</NavLink>
-      </li>
+      {!user && (
+        <li>
+          <NavLink onClick={() => setIsMenu(false)} to="/login">
+            Login
+          </NavLink>
+        </li>
+      )}
+
+      {!user && (
+        <li>
+          <NavLink onClick={() => setIsMenu(false)} to="/register">
+            Register
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink to="/secret">Secret</NavLink>
       </li>
@@ -29,16 +40,23 @@ const Header = () => {
           Home
         </NavLink>
       </li>
-      <li>
-        <NavLink onClick={() => setIsMenu(false)} to="/login">
-          Login
-        </NavLink>
-      </li>
-      <li>
-        <NavLink onClick={() => setIsMenu(false)} to="/register">
-          Register
-        </NavLink>
-      </li>
+
+      {!user && (
+        <li>
+          <NavLink onClick={() => setIsMenu(false)} to="/login">
+            Login
+          </NavLink>
+        </li>
+      )}
+
+      {!user && (
+        <li>
+          <NavLink onClick={() => setIsMenu(false)} to="/register">
+            Register
+          </NavLink>
+        </li>
+      )}
+
       <li>
         <NavLink onClick={() => setIsMenu(false)} to="/secret">
           Secret
@@ -49,15 +67,20 @@ const Header = () => {
 
   const profile = (
     <div className="flex items-center gap-2">
-      <div>
+      <div
+        className="tooltip tooltip-left tooltip-accent"
+        data-tip={`HEllo 😎${user?.displayName}`}
+      >
         <img
-          src="https://img.icons8.com/?size=64&id=81222&format=png"
+          src={user?.photoURL}
           alt=""
-          className="max-w-[40px] border bg-opacity-75  border-green-400 p-[2px] rounded-full"
+          className=" max-w-[40px] border bg-opacity-75  border-green-400 p-[2px] rounded-full"
         />
       </div>
 
-      <button className="btn btn-accent btn-sm text-white">Log Out</button>
+      <button onClick={logOut} className="btn btn-accent btn-sm text-white">
+        Log Out
+      </button>
     </div>
   );
 
@@ -71,7 +94,7 @@ const Header = () => {
           </h2>
         </div>
         <div className=" hidden lg:block ">{menuLG}</div>
-        <div className="">{profile}</div>
+        {user && user?.email && <div className="">{profile}</div>}
 
         <div
           className={`lg:hidden z-50 animate__animated ${
