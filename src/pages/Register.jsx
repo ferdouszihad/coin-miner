@@ -4,10 +4,11 @@ import animation from "../assets/lotties/Animation - 1698080630949.json";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
+// import axios from "axios";
 
 const Register = () => {
   const { user, createUser, setUser, updateUser } = useAuth();
-  console.log(user);
+  // console.log(user);
   const {
     register,
     handleSubmit,
@@ -34,18 +35,19 @@ const Register = () => {
     console.log(data);
     createUser(data?.email, data?.pass)
       .then((res) => {
-        updateUser({ photoURL: activeAvatar, displayName: data.name }).then(
-          () => {
-            alert("login success");
-            setUser({
-              ...res.user,
-              photoURL: activeAvatar,
-              displayName: data.name,
-            });
-          }
-        );
-
-        console.log(res);
+        console.log(res.user);
+        fetch("http://localhost:5000/user", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ ...data, photoURL: activeAvatar }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("data After inserting Database", data);
+            setUser({ ...res.user, ...data });
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -82,7 +84,7 @@ const Register = () => {
                 type="text"
                 placeholder="Enter your Name"
                 className="input input-bordered"
-                {...register("name", {
+                {...register("displayName", {
                   required: true,
                   pattern: /^[A-Za-z\s]{1,30}$/,
                 })}
@@ -213,9 +215,7 @@ const Register = () => {
                     Password Does Not Matched
                   </span>
                 ) : (
-                  <span className="text-sm block text-green-600 p-2">
-                    ✅ Password Matched
-                  </span>
+                  ""
                 )}
               </label>
             </div>

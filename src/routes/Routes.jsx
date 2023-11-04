@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import MainArch from "../layouts/MainArch";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -25,6 +25,20 @@ const router = createBrowserRouter([
       {
         path: "/secret",
         element: <Secret></Secret>,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: (
+      <div>
+        Dashboard <Outlet></Outlet>{" "}
+      </div>
+    ),
+    children: [
+      {
+        path: "/user-info",
+        element: <h2> Hello User</h2>,
       },
     ],
   },

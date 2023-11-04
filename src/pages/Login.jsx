@@ -1,7 +1,29 @@
 import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 import animation from "../assets/lotties/Animation - 1698079529296.json";
+import { useForm } from "react-hook-form";
+import { useContext, useState } from "react";
+import { AuthContext } from "../contexts/AuthContextProvider";
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
+
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data.email, data.pass);
+    signIn(data.email, data.pass)
+      .then(() => {
+        alert("login success");
+        setLoginError("");
+      })
+      .catch((err) => {
+        console.log({ ...err });
+        setLoginError("password/email don't match");
+      });
+    console.log(data);
+  };
+
   return (
     <div className="hero min-h-screen w-11/12 mx-auto">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -21,7 +43,11 @@ const Login = () => {
             </p>
           </div>
 
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+            {loginError.length > 0 && (
+              <span className="text-sm text-red-600 p-2">{loginError}</span>
+            )}
+
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -31,6 +57,9 @@ const Login = () => {
                 placeholder="email"
                 className="input input-bordered"
                 required
+                {...register("email", {
+                  required: true,
+                })}
               />
             </div>
             <div className="form-control">
@@ -41,7 +70,9 @@ const Login = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
-                required
+                {...register("pass", {
+                  required: true,
+                })}
               />
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">

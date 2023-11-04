@@ -19,6 +19,7 @@ const AuthContextProvider = (props = {}) => {
   const auth = getAuth(app);
 
   const [user, setUser] = useState(null);
+  console.log(user);
 
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +51,18 @@ const AuthContextProvider = (props = {}) => {
 
   useEffect(() => {
     const unscubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      // console.log("office e dhukar shomoy amar kache ja thakbe", currentUser);
+      if (currentUser) {
+        fetch(`http://localhost:5000/users/${currentUser?.email}`)
+          .then((res) => res.json())
+          .then((databaseData) => {
+            const myUsersAllData = { ...currentUser, ...databaseData };
+            setUser(myUsersAllData);
+          });
+      } else {
+        setUser(currentUser);
+      }
+      //jdi user thake taile ami amar database theke baki dta niye eshe user e diye dibo
       setLoading(false);
     });
     return () => {

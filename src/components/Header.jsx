@@ -67,15 +67,21 @@ const Header = () => {
 
   const profile = (
     <div className="flex items-center gap-2">
+      <div className="bg-stone-300 p-2 rounded-lg shadow">
+        {user?.credit} 🪙
+      </div>
       <div
         className="tooltip tooltip-left tooltip-accent"
         data-tip={`HEllo 😎${user?.displayName}`}
       >
-        <img
-          src={user?.photoURL}
-          alt=""
-          className=" max-w-[40px] border bg-opacity-75  border-green-400 p-[2px] rounded-full"
-        />
+        {" "}
+        {user?.photoURL && (
+          <img
+            src={user?.photoURL}
+            alt=""
+            className=" max-w-[40px] border bg-opacity-75  border-green-400 p-[2px] rounded-full"
+          />
+        )}
       </div>
 
       <button onClick={logOut} className="btn btn-accent btn-sm text-white">
